@@ -1,4 +1,4 @@
-https://github.com/mitchell-h/DataStaxDay/blob/master/README.md
+https://github.com/012345/DataStaxDay
 
 Welcome to DataStax Essentials Day!
 ===================
