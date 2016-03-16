@@ -12,7 +12,7 @@ In this session, you'll learn all about DataStax Enterprise. It's a mix between 
 Hands On Setup
 -------------
 
-We have an 15 node cluster for you to play with! The cluster is currently running in both **search** and **analytics** mode so you can take advantage of both Spark and Solr on your Cassandra data. 
+If you are having issues or didn't have time to launch your own Azure instance you may use a node form the list below
 
 ```
 
