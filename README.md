@@ -240,6 +240,7 @@ CREATE TABLE amazon.metadata (
 ```
 So how do we set this up within our Azure Instances?
 Setup the Amazon Dataset
+
 ```sudo apt-get install python-pip```
 
 ```sudo pip install cassandra-driver```
