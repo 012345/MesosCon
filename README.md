@@ -253,17 +253,22 @@ Setup the Amazon Dataset
 Edit the loader 
 > run ‘ifconfig’ and look to see what your 10.0.0.x address is
 
-```ifconfig```
+```
+ifconfig
+```
 
 Edit the solr_dataloader.py file
 
-```sudo vi solr_dataloader.py```
+```
+sudo vi solr_dataloader.py
+```
 
 > Change the line  cluster = Cluster(['node0','node1','node2']) to cluster = Cluster(['10.0.0.X’]) 
 > Make sure to replace 127.0.0.1 with the IP of the respective node 
 
-```sudo python solr_dataloader.py``` 
 ```
+sudo python solr_dataloader.py
+
 ./create_core.sh
 ```
 
