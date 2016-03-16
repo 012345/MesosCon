@@ -54,6 +54,8 @@ Hands On DSE Cassandra
 Cassandra is the brains of DSE. It's an awesome storage engine that handles replication, availability, structuring, and of course, storing the data at lightning speeds. It's important to get yourself acquainted with the Cassandra to fully utilize the power of the DSE Stack. 
 
 Enable Search and Analytics on your cluster
+
+Stop DSE
 ```
 sudo service dse stop
 ```
@@ -61,6 +63,8 @@ Edit /etc/default/dse to enable Search and analytics. Set SOLR_ENABLED and SPARK
 ```
 sudo vi /etc/default/dse
 ```
+
+Start DSE
 ```
 sudo service dse start
 ```
