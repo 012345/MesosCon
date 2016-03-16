@@ -44,14 +44,6 @@ Password: C@ssandra
  - Spark Master: http://23.96.185.22:7080/
  - Solr UI: http://23.96.187.35:8983/solr/
 
-#### Connecting to the cluster from DevCenter
-- Simply add a new connection
-- Enter a name for your connection
-- Enter any of the ip's from above as a contact host
-- Profit. 
-
-![DevCenter How To](http://i.imgur.com/8zwzmDj.png)
-
 
 ----------
 
@@ -249,20 +241,30 @@ CREATE TABLE amazon.metadata (
 So how do we set this up within our Azure Instances?
 Setup the Amazon Dataset
 ```sudo apt-get install python-pip```
+
 ```sudo pip install cassandra-driver```
+
 ```sudo apt-get install git```
+
 ```git clone https://github.com/Marcinthecloud/Solr-Amazon-Book-Demo.git```
+
 ```cd Solr-Amazon-Book-Demo/```
 
 Edit the loader 
 - run ‘ifconfig’ and look to see what your 10.0.0.x address is
 ```ifconfig```
 
+Edit the solr_dataloader.py file
+
 ```sudo vi solr_dataloader.py```
- - Change the line  cluster = Cluster(['node0','node1','node2']) to cluster = Cluster(['10.0.0.X’]) ** Use the 10.0.0.X address you just identified by running ifconfig
+
+> Change the line  cluster = Cluster(['node0','node1','node2']) to cluster = Cluster(['10.0.0.X’]) 
+> Make sure to replace 127.0.0.1 with the IP of the respective node 
 
 ```sudo python solr_dataloader.py``` 
-```./create_core.sh```
+```
+./create_core.sh
+```
 
 
 > Example page of what's in the DB http://www.amazon.com/Science-Closer-Look-Grade-6/dp/0022841393/ref=sr_1_1?ie=UTF8&qid=1454964627&sr=8-1&keywords=0022841393
@@ -273,18 +275,22 @@ So what are things you can do?
 SELECT * FROM amazon.metadata WHERE solr_query='{"q":"title:Noir~", "fq":"categories:Books", "sort":"title asc"}' limit 10; 
 ```
 > Faceting: Get counts of fields 
+
 ```
 SELECT * FROM amazon.metadata WHERE solr_query='{"q":"title:Noir~", "facet":{"field":"categories"}}' limit 10; 
 ```
 > Geospatial Searches: Supports box and radius
+
 ```
 SELECT * FROM amazon.clicks WHERE solr_query='{"q":"asin:*", "fq":"+{!geofilt pt=\"37.7484,-122.4156\" sfield=location d=1}"}' limit 10; 
 ```
 > Joins: Not your relational joins. These queries 'borrow' indexes from other tables to add filter logic. These are fast! 
+
 ```
 SELECT * FROM amazon.metadata WHERE solr_query='{"q":"*:*", "fq":"{!join from=asin to=asin force=true fromIndex=amazon.clicks}area_code:415"}' limit 5; 
 ```
 > Fun all in one. 
+
 ```
 SELECT * FROM amazon.metadata WHERE solr_query='{"q":"*:*", "facet":{"field":"categories"}, "fq":"{!join from=asin to=asin force=true fromIndex=amazon.clicks}area_code:415"}' limit 5;
 ```
