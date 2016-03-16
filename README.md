@@ -251,7 +251,8 @@ Setup the Amazon Dataset
 ```cd Solr-Amazon-Book-Demo/```
 
 Edit the loader 
-- run ‘ifconfig’ and look to see what your 10.0.0.x address is
+> run ‘ifconfig’ and look to see what your 10.0.0.x address is
+
 ```ifconfig```
 
 Edit the solr_dataloader.py file
