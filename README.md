@@ -53,6 +53,18 @@ Hands On DSE Cassandra
 
 Cassandra is the brains of DSE. It's an awesome storage engine that handles replication, availability, structuring, and of course, storing the data at lightning speeds. It's important to get yourself acquainted with the Cassandra to fully utilize the power of the DSE Stack. 
 
+Enable Search and Analytics on your cluster
+```
+sudo service dse stop
+```
+Edit /etc/default/dse to enable Search and analytics. Set SOLR_ENABLED and SPARK_ENABLED equal to 1
+```
+sudo vi /etc/default/dse
+```
+```
+sudo service dse start
+```
+
 #### Creating a Keyspace, Table, and Queries 
 
 Try the following CQL commands in DevCenter. In addition to DevCenter, you can also use **CQLSH** as an interactive command line tool for CQL access to Cassandra. Start CQLSH like this:
