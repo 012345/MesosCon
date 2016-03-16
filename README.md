@@ -67,9 +67,12 @@ Try the following CQL commands in DevCenter. In addition to DevCenter, you can a
 
 Run ifconfig and look to see what your 10.0.0.x IP Address is
 
-```ifconfig``` 
+```
+ifconfig
 
-```cqlsh 10.0.0.X``` 
+cqlsh 10.0.0.X
+``` 
+
 > Make sure to replace 127.0.0.1 with the IP of the respective node 
 
 Let's make our first Cassandra Keyspace! If you are using uppercase letters, use double quotes around the keyspace.
