@@ -6,45 +6,6 @@ Welcome to DataStax Essentials Day!
 
 In this session, you'll learn all about DataStax Enterprise. It's a mix between presentation and hands-on. This is **obviously** your reference for the hands-on content. Feel free to bookmark this page for future reference! 
 
-----------
-
-
-Hands On Setup
--------------
-
-If you are having issues or didn't have time to launch your own Azure instance you may use a node form the list below
-
-```
-
-// You can login to any of these nodes 
-
-ssh datastax@23.96.183.115
-ssh datastax@23.96.181.40
-ssh datastax@23.96.182.86
-ssh datastax@23.96.182.174
-ssh datastax@23.96.181.172
-ssh datastax@23.96.182.180
-ssh datastax@23.96.182.113
-ssh datastax@23.96.181.30
-ssh datastax@23.96.178.226
-ssh datastax@23.96.183.37
-ssh datastax@23.96.177.105
-ssh datastax@23.96.181.207
-ssh datastax@23.96.183.190
-ssh datastax@23.96.183.210
-ssh datastax@23.96.182.217
-23.96.218.197 -- OPSCENTER
-
-login: datastax
-pw: foo123!
-        
-```
-
-#### UI's you'll want to play around with
- 
- - OpsCenter: http://23.96.218.197:8888/opscenter/index.html
- - Spark Master: http://23.96.182.174:7080/
- - Solr UI: http://23.96.183.190:8983/solr/
 
 
 ----------
