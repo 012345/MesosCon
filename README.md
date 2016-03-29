@@ -169,6 +169,9 @@ Let's start off by indexing the tables we've already made. Here's where the dset
 ```
 dsetool create_core <yourkeyspace>.sales generateResources=true reindex=true
 ```
+```
+cqlsh 10.0.0.X
+``` 
 
 >If you've ever created your own Solr cluster, you know you need to create the core and upload a schema and config.xml. That **generateResources** tag does that for you. For production use, you'll want to take the resources and edit them to your needs but it does save you a few steps. 
 
