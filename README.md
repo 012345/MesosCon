@@ -49,7 +49,7 @@ cqlsh 10.0.0.X
 Let's make our first Cassandra Keyspace! If you are using uppercase letters, use double quotes around the keyspace.
 
 ```
-CREATE KEYSPACE <Enter your name> WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 3 };
+CREATE KEYSPACE <Enter your name> WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1 };
 ```
 
 And just like that, any data within any table you create under your keyspace will automatically be replicated 3 times. Let's keep going and create ourselves a table. You can follow my example or be a rebel and roll your own. 
@@ -102,6 +102,8 @@ Hands On Cassandra Consistency
 -------------------
 
 #### Let's play with consistency!
+
+To play with this you'll need more than one node. Switch over to the full cluster and come back after you understand consistency levels - https://github.com/mitchell-h/DataStaxDay 
 
 Consistency in Cassandra refers to the number of acknowledgements replica nodes need to send to the coordinator for an operation to be successful while also providing good data (avoiding dirty reads). 
 
