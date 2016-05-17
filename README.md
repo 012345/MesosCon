@@ -24,7 +24,7 @@ sudo service dse stop
 ```
 Edit /etc/default/dse to enable Search and analytics. Set SOLR_ENABLED and SPARK_ENABLED equal to 1
 ```
-sudo vi /etc/default/dse
+sudo nano /etc/default/dse
 ```
 
 Start DSE
