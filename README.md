@@ -1,61 +1,112 @@
-https://github.com/012345/DataStaxDay
-
-Welcome to DataStax Essentials Day!
+Welcome to the MesoCon Example!
 ===================
-![icon](http://i.imgur.com/FoIOBlt.png)
-
-In this session, you'll learn all about DataStax Enterprise. It's a mix between presentation and hands-on. This is **obviously** your reference for the hands-on content. Feel free to bookmark this page for future reference! 
-
-If you were unable to deploy your own azure instance - Use the tutorial here https://github.com/mitchell-h/DataStaxDay
-
-----------
 
 
-Hands On DSE Cassandra 
--------------------
+In this session, you'll learn how to get started with DataStax on DC/OS. 
 
-Cassandra is the brains of DSE. It's an awesome storage engine that handles replication, availability, structuring, and of course, storing the data at lightning speeds. It's important to get yourself acquainted with the Cassandra to fully utilize the power of the DSE Stack. 
+First you can watch the videos on deploying DSE on DC/OS
+Install DSE - https://youtu.be/IgUBKw1EOFU
+Install Opscenter - https://youtu.be/8jxRCiDulp0
+Use the CLI - https://youtu.be/BUAVHDwAvHE
+Add a Node - https://youtu.be/DNOtr-YlgQQ
 
-Enable Search and Analytics on your cluster
+#### LETS GET STARTED
 
-Stop DSE
-```
-sudo service dse stop
-```
-Edit /etc/default/dse to enable Search and analytics. Set SOLR_ENABLED and SPARK_ENABLED equal to 1
-```
-sudo nano /etc/default/dse
-```
+First youu'll need to install the CLI as shown in the video. In the DC/OS Gui go to the top left and click the down arrow and choose "Install CLI" and follow the directions.
 
-Start DSE
-```
-sudo service dse start
-```
-
-#### Creating a Keyspace, Table, and Queries 
-
-Try the following CQL commands in DevCenter. In addition to DevCenter, you can also use **CQLSH** as an interactive command line tool for CQL access to Cassandra. Start CQLSH like this:
-
-Run ifconfig and look to see what your 10.0.0.x IP Address is
+If you prefer to install by command line you can as shown below but if you've already installed using the GUI just skip these steps. 
 
 ```
-ifconfig
-
-cqlsh 10.0.0.X
-``` 
-
-> Make sure to replace 10.0.0.X with the IP of the respective node 
-
-Let's make our first Cassandra Keyspace! If you are using uppercase letters, use double quotes around the keyspace.
-
-```
-CREATE KEYSPACE <Enter your name> WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1 };
+dcos package install datastax-dse
+dcos package install datastax-ops
 ```
 
-And just like that, any data within any table you create under your keyspace will automatically be replicated 3 times. Let's keep going and create ourselves a table. You can follow my example or be a rebel and roll your own. 
+Next you'll need to install our specific CLI's for DC/OS
+```
+dcos package install --cli datastax-dse
+dcos package install --cli datastax-ops
+```
+
+You can then look at the endpoints deployed in your DC/OS Cluster
 
 ```
-CREATE TABLE <yourkeyspace>.sales (
+dcos datastax-dse endpoints
+
+[
+  "spark-master-webui",
+  "spark-worker-webui",
+  "cassandra-native",
+  "solr-admin",
+  "cassandra-thrift"
+]
+```
+And then you can look specifically at the cluster nodes by viewing the cassandra endpoints
+
+```
+dcos datastax-dse endpoints cassandra-native
+{
+  "address": [
+    "10.200.177.76:9042",
+    "10.200.177.80:9042",
+    "10.200.177.8:9042"
+  ],
+  "dns": [
+    "dse-0-node.datastax-dse.autoip.dcos.thisdcos.directory:9042",
+    "dse-1-node.datastax-dse.autoip.dcos.thisdcos.directory:9042",
+    "dse-2-node.datastax-dse.autoip.dcos.thisdcos.directory:9042"
+  ]
+}
+```
+
+Now lets look at the OpsCenter endpoints to find the URL for the GUI
+
+```
+dcos datastax-ops endpoints
+[
+  "opscenter"
+]
+````
+
+And then dig into that endpoint further
+
+```
+dcos datastax-ops endpoints opscenter
+{
+  "address": ["10.200.177.79:8888"],
+  "dns": ["opscenter-0-node.datastax-ops.autoip.dcos.thisdcos.directory:8888"]
+}
+
+```
+
+As long as you have direct connectivity, VPN or a DC/OS TUnnel you can open that URL 
+
+
+Awesome!  You can see the cluster. Now lets go back to the CLI and add some data.
+
+Look back at that endpoint data from the dse endpoints command to find the name of one of your DSE nodes. Reference that node in the task exec command and DC/OS to get you a dang shell. we want to load data! 
+
+```
+dcos task exec -it dse-0-node /bin/bash
+```
+
+you in?  you're in.
+
+Lets CLQSH
+
+```
+cqlsh 10.0.3.22
+```
+
+Now lets create a simple yet impractival keyspace. Remember a keyspace is equivalent to a database
+
+```
+CREATE KEYSPACE sales WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1 };
+```
+
+Now lets add a table to that keyspace
+
+```
+CREATE TABLE customer.sales (
 	name text,
 	time int,
 	item text,
@@ -64,30 +115,29 @@ CREATE TABLE <yourkeyspace>.sales (
 ) WITH CLUSTERING ORDER BY ( time DESC );
 ```
 
-> Yup. This table is very simple but don't worry, we'll play with some more interesting tables in just a minute.
+And then how about we add some data to that table in that keyspace
 
-Let's get some data into your table! Cut and paste these inserts into DevCenter or CQLSH. Feel free to insert your own data values, as well. 
 
 ```
-INSERT INTO <yourkeyspace>.sales (name, time, item, price) VALUES ('marc', 20150205, 'Apple Watch', 299.00);
-INSERT INTO <yourkeyspace>.sales (name, time, item, price) VALUES ('marc', 20150204, 'Apple iPad', 999.00);
-INSERT INTO <yourkeyspace>.sales (name, time, item, price) VALUES ('rich', 20150206, 'Music Man Stingray Bass', 1499.00);
-INSERT INTO <yourkeyspace>.sales (name, time, item, price) VALUES ('marc', 20150207, 'Jimi Hendrix Stratocaster', 899.00);
-INSERT INTO <yourkeyspace>.sales (name, time, item, price) VALUES ('rich', 20150208, 'Santa Cruz Tallboy 29er', 4599.00);
+INSERT INTO customer.sales (name, time, item, price) VALUES ('marc', 20150205, 'Apple Watch', 299.00);
+INSERT INTO customer.sales (name, time, item, price) VALUES ('marc', 20150204, 'Apple iPad', 999.00);
+INSERT INTO customer.sales (name, time, item, price) VALUES ('rich', 20150206, 'Music Man Stingray Bass', 1499.00);
+INSERT INTO customer.sales (name, time, item, price) VALUES ('marc', 20150207, 'Jimi Hendrix Stratocaster', 899.00);
+INSERT INTO customer.sales (name, time, item, price) VALUES ('rich', 20150208, 'Santa Cruz Tallboy 29er', 4599.00);
 ```
 
-And to retrieve it:
+Sooooooo Closeeeeeeee.. Lets query that data!
 
 ```
-SELECT * FROM <keyspace>.sales where name='marc' AND time >=20150205 ;
+SELECT * FROM customer.sales where name='marc' AND time >=20150205 ;
 ```
->See what I did there? You can do range scans on clustering keys! Give it a try.
 
-----------
+Yah.. That's it. You've deployed a stateful service. You've connected it to another stateful service (the management gui). You've inserted data in the database. 
+
+Reach out to us with questions at techpartner@datastax.com
 
 
-Hands On Cassandra Primary Keys 
--------------------
+OHHH. YOU WANT TO KEEP GOING?
 
 #### The secret sauce of the Cassandra data model: Primary Key
 
@@ -113,7 +163,6 @@ In some cases, developers find Cassandra's replication fast enough to warrant lo
 
 Let's give it a shot. 
 
->During this exercise, I'll be taking down nodes so you can see the CAP theorem in action. We'll be using CQLSH for this one. 
 
 **In CQLSH**:
 
@@ -362,3 +411,5 @@ dsetool create_core //will create a Solr schema on Cassandra data for Search
 /var/log/cassandra/system.log
 ```
 
+
+OKAY.. REALLY.. BACK TO WORK. REACH OUT WITH QUESTIONS. techpartner@datastax.com
