@@ -6,8 +6,11 @@ In this session, you'll learn how to get started with DataStax on DC/OS.
 
 First you can watch the videos on deploying DSE on DC/OS
 [Install DSE](https://youtu.be/IgUBKw1EOFU)
+
 [Install Opscenter](https://youtu.be/8jxRCiDulp0)
+
 [Use the CLI](https://youtu.be/BUAVHDwAvHE)
+
 [Add a Node](https://youtu.be/DNOtr-YlgQQ)
 
 #### LETS GET STARTED
