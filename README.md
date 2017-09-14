@@ -5,6 +5,7 @@ Welcome to the MesoCon Example!
 In this session, you'll learn how to get started with DataStax on DC/OS. 
 
 First you can watch the videos on deploying DSE on DC/OS
+
 [Install DSE](https://youtu.be/IgUBKw1EOFU)
 
 [Install Opscenter](https://youtu.be/8jxRCiDulp0)
