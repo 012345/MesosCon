@@ -41,7 +41,7 @@ dcos datastax-dse endpoints
 [
   "spark-master-webui",
   "spark-worker-webui",
-  "client-native",
+  "native-client",
   "solr-admin",
   "cassandra-thrift"
 ]
@@ -49,7 +49,7 @@ dcos datastax-dse endpoints
 And then you can look specifically at the cluster nodes by viewing the cassandra endpoints
 
 ```
-dcos datastax-dse endpoints client-native
+dcos datastax-dse endpoints native-client
 {
   "address": [
     "10.200.177.76:9042",
