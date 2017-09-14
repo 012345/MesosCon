@@ -27,6 +27,12 @@ dcos package install --cli datastax-dse
 dcos package install --cli datastax-ops
 ```
 
+Oh yah.. Setup the display
+```
+export TERM=xterm-256color
+export HOME=/mnt/mesos/sandbox
+```
+
 You can then look at the endpoints deployed in your DC/OS Cluster
 
 ```
@@ -35,7 +41,7 @@ dcos datastax-dse endpoints
 [
   "spark-master-webui",
   "spark-worker-webui",
-  "cassandra-native",
+  "client-native",
   "solr-admin",
   "cassandra-thrift"
 ]
@@ -43,7 +49,7 @@ dcos datastax-dse endpoints
 And then you can look specifically at the cluster nodes by viewing the cassandra endpoints
 
 ```
-dcos datastax-dse endpoints cassandra-native
+dcos datastax-dse endpoints client-native
 {
   "address": [
     "10.200.177.76:9042",
@@ -97,7 +103,7 @@ Lets CLQSH
 cqlsh 10.0.3.22
 ```
 
-Now lets create a simple yet impractival keyspace. Remember a keyspace is equivalent to a database
+Now lets create a simple yet impractical keyspace. Remember a keyspace is equivalent to a database
 
 ```
 CREATE KEYSPACE sales WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1 };
