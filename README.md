@@ -97,7 +97,7 @@ dcos task exec -it dse-0-node /bin/bash
 
 you in?  you're in.
 
-Lets CLQSH
+Lets CLQSH. Grab an IP address of one of the native-client endpoints. for me it was 10.0.3.22. for you it's something else
 
 ```
 cqlsh 10.0.3.22
